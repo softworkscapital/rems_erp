@@ -37,6 +37,17 @@ crudsObj.getAccountMapById = (id) => {
 };
 crudsObj.getAccountMapsInfo = () => {
     return new Promise((resolve, reject) => {
+        // pool.query('SELECT fin_acc_account_map.*, fin_acc_account_info.classifier, fin_acc_account_info.fin_acc_account_class, fin_acc_account_info.fin_acc_account_type, fin_acc_account_info.fin_acc_account_folio, fin_acc_account_info.Explanation FROM fin_acc_account_map INNER JOIN fin_acc_account_info ON fin_acc_account_map.fin_acc_account_info_id = fin_acc_account_info.fin_acc_account_info_id', (err, results) => {
+        pool.query('SELECT fin_acc_account_map.*, fin_acc_account_info.classifier, fin_acc_account_info.fin_acc_account_class, fin_acc_account_info.fin_acc_account_type, fin_acc_account_info.fin_acc_account_folio, fin_acc_account_info.Explanation FROM fin_acc_account_map INNER JOIN fin_acc_account_info ON fin_acc_account_map.fin_acc_account_info_id = fin_acc_account_info.fin_acc_account_info_id WHERE fin_acc_account_info.fin_acc_account_type = "Cash & Bank"', (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+};
+crudsObj.getAccountMapsInfoAll = () => {
+    return new Promise((resolve, reject) => {
         pool.query('SELECT fin_acc_account_map.*, fin_acc_account_info.classifier, fin_acc_account_info.fin_acc_account_class, fin_acc_account_info.fin_acc_account_type, fin_acc_account_info.fin_acc_account_folio, fin_acc_account_info.Explanation FROM fin_acc_account_map INNER JOIN fin_acc_account_info ON fin_acc_account_map.fin_acc_account_info_id = fin_acc_account_info.fin_acc_account_info_id', (err, results) => {
             if (err) {
                 return reject(err);
@@ -46,9 +57,9 @@ crudsObj.getAccountMapsInfo = () => {
     })
 };
 
-crudsObj.getAccountMapsInfo2 = () => {
+crudsObj.getAccountMapsInfo2 = (name) => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT fin_acc_account_map.*, fin_acc_account_info.classifier, fin_acc_account_info.fin_acc_account_class, fin_acc_account_info.fin_acc_account_type, fin_acc_account_info.fin_acc_account_folio, fin_acc_account_info.Explanation FROM fin_acc_account_map INNER JOIN fin_acc_account_info ON fin_acc_account_map.fin_acc_account_info_id = fin_acc_account_info.fin_acc_account_info_id WHERE fin_acc_account_info.fin_acc_account_class = "Admin Expenses"', (err, results) => {
+        pool.query('SELECT fin_acc_account_map.*, fin_acc_account_info.classifier, fin_acc_account_info.fin_acc_account_class, fin_acc_account_info.fin_acc_account_type, fin_acc_account_info.fin_acc_account_folio, fin_acc_account_info.Explanation FROM fin_acc_account_map INNER JOIN fin_acc_account_info ON fin_acc_account_map.fin_acc_account_info_id = fin_acc_account_info.fin_acc_account_info_id WHERE fin_acc_account_info.fin_acc_account_class = ?',[name], (err, results) => {
             if (err) {
                 return reject(err);
             }
@@ -81,10 +92,7 @@ crudsObj.getAccountMapsInfo4 = (name) => {
 
 crudsObj.updateAccountMap = (id, accountMapId, accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency) => {
     return new Promise((resolve, reject) => {
-        pool.query(
-            'UPDATE fin_acc_account_map SET fin_acc_account_info_id = ?, fin_acc_account_info_id = ?, fin_acc_account_project_id = ?, created_on = ?, acc_account_name = ?, created_by = ?, authorized = ?, currency = ?  WHERE fin_acc_account_map_id = ?',
-            [accountMapId, accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency, id],
-            (err, result) => {
+        pool.query('UPDATE fin_acc_account_map SET fin_acc_account_info_id = ?, fin_acc_account_info_id = ?, fin_acc_account_project_id = ?, created_on = ?, acc_account_name = ?, created_by = ?, authorized = ?, currency = ?  WHERE fin_acc_account_map_id = ?',[accountMapId, accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency, id], (err, result) => {
                 if (err) {
                     return reject(err);
                 }

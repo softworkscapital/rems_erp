@@ -16,7 +16,7 @@ crudsObj.postCashBank = (indexAccId, indexAccName, dualTransAccName, dualTransAc
 
 crudsObj.getCashBanks = () => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT * FROM fin_acc_bank_and_cash_accounts', (err, results) => {
+        pool.query('SELECT * FROM fin_acc_bank_and_cash_accounts ORDER BY fin_acc_account_map_id DESC', (err, results) => {
             if (err) {
                 return reject(err);
             }
@@ -28,6 +28,17 @@ crudsObj.getCashBanks = () => {
 crudsObj.getCashBankById = (id) => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM fin_acc_bank_and_cash_accounts WHERE fin_acc_bank_and_cash_accounts_id = ?', [id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+};
+
+crudsObj.getCashBankByName = (name) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM fin_acc_bank_and_cash_accounts WHERE index_acc_name= ?', [name], (err, results) => {
             if (err) {
                 return reject(err);
             }
