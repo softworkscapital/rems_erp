@@ -1,8 +1,8 @@
 const express = require('express');
-const expensesAccRouter = express.Router();
-const expensesAccDbOperations = require('../cruds/expensesAcc');
+const directExpensesRouter = express.Router();
+const directExpensesDbOperations = require('../cruds/direct_expenses');
 
-expensesAccRouter.post('/', async (req, res, next) => {
+directExpensesRouter.post('/', async (req, res, next) => {
     try {
         let postedValues = req.body;
         // let fin_acc_admin_expenses_accounts_id = postedValues.fin_acc_admin_expenses_accounts_id;
@@ -29,7 +29,7 @@ expensesAccRouter.post('/', async (req, res, next) => {
         let txn_reference = postedValues.txn_reference;
         let flag = postedValues.flag;
         let comment = postedValues.comment;
-        let results = await expensesAccDbOperations.postExpensesAcc(
+        let results = await directExpensesDbOperations.postExpensesAcc(
             fin_acc_account_map_id, index_acc_name_id, index_acc_name, dual_trans_acc_name_id, dual_trans_acc_name, datepaid, datefor, description, cost_center, link, currency, rate_to_usd, value, debit, credit, pmode, requester, confirmed, authorized, comitted, txn_reference, flag, comment
         );
         res.json(results);
@@ -39,9 +39,9 @@ expensesAccRouter.post('/', async (req, res, next) => {
     }
 })
 
-expensesAccRouter.get('/', async (req, res, next) => {
+directExpensesRouter.get('/', async (req, res, next) => {
     try {
-        let results = await expensesAccDbOperations.getExpensesAccs();
+        let results = await directExpensesDbOperations.getExpensesAccs();
         res.json(results);
     } catch (e) {
         console.log(e);
@@ -49,10 +49,10 @@ expensesAccRouter.get('/', async (req, res, next) => {
     }
 });
 
-expensesAccRouter.get('/:id', async (req, res, next) => {
+directExpensesRouter.get('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;
-        let result = await expensesAccDbOperations.getExpensesAccById(id);
+        let result = await directExpensesDbOperations.getExpensesAccById(id);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -60,10 +60,10 @@ expensesAccRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-expensesAccRouter.get('/acc/:name', async (req, res, next) => {
+directExpensesRouter.get('/acc/:name', async (req, res, next) => {
     try {
         let name = req.params.name;
-        let result = await expensesAccDbOperations.getExpensesAccByName(name);
+        let result = await directExpensesDbOperations.getExpensesAccByName(name);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -71,10 +71,10 @@ expensesAccRouter.get('/acc/:name', async (req, res, next) => {
     }
 });
 
-expensesAccRouter.get('/acc/index/:name', async (req, res, next) => {
+directExpensesRouter.get('/acc/index/:name', async (req, res, next) => {
     try {
         let name = req.params.name;
-        let result = await expensesAccDbOperations.getExpensesAccByIndexName(name);
+        let result = await directExpensesDbOperations.getExpensesAccByIndexName(name);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -82,9 +82,9 @@ expensesAccRouter.get('/acc/index/:name', async (req, res, next) => {
     }
 });
 
-expensesAccRouter.get('/aaccBal/name', async (req, res, next) => {
+directExpensesRouter.get('/aaccBal/name', async (req, res, next) => {
     try {
-        let results = await expensesAccDbOperations.getExpensesAccs2();
+        let results = await directExpensesDbOperations.getExpensesAccs2();
         res.json(results);
     } catch (e) {
         console.log(e);
@@ -92,7 +92,7 @@ expensesAccRouter.get('/aaccBal/name', async (req, res, next) => {
     }
 });
 
-expensesAccRouter.put('/:id', async (req, res, next) => {
+directExpensesRouter.put('/:id', async (req, res, next) => {
     try {
         let updatedValues = req.body;
         let id = req.params.id;
@@ -120,7 +120,7 @@ expensesAccRouter.put('/:id', async (req, res, next) => {
         let flag = updatedValues.flag;
         let comment = updatedValues.comment;
 
-        let result = await expensesAccDbOperations.updateExpensesAcc(
+        let result = await directExpensesDbOperations.updateExpensesAcc(
             id, fin_acc_account_map_id, index_acc_name_id, index_acc_name, dual_trans_acc_name_id, dual_trans_acc_name, datepaid, datefor, description, cost_center, link, currency, rate_to_usd, value, debit, credit, pmode, requester, confirmed, authorized, comitted, txn_reference, flag, comment
         );
         res.json(result);
@@ -130,10 +130,10 @@ expensesAccRouter.put('/:id', async (req, res, next) => {
     }
 });
 
-expensesAccRouter.delete('/:id', async (req, res, next) => {
+directExpensesRouter.delete('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;
-        let result = await expensesAccDbOperations.deleteExpensesAcc(id);
+        let result = await directExpensesDbOperations.deleteExpensesAcc(id);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -141,4 +141,4 @@ expensesAccRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
-module.exports = expensesAccRouter;
+module.exports = directExpensesRouter;

@@ -1,39 +1,19 @@
 const express = require('express');
-const cashBankRouter = express.Router();
-const cashBankDbOperations = require('../cruds/cash_bank');
+const projectRouter = express.Router();
+const projectDbOperations = require('../cruds/projects');
 
-cashBankRouter.post('/', async (req, res, next) => {
+projectRouter.post('/', async (req, res, next) => {
+
     try {
         let postedValues = req.body;
-        let indexAccId = postedValues.index_acc_name_id;
-        let indexAccName = postedValues.index_acc_name;
-        let dualTransAccName = postedValues.dual_trans_acc_name;
-        let dualTransAccNameId = postedValues.dual_trans_acc_name_id;
-        let accountMapId = postedValues.fin_acc_account_map_id;
-        let accountLink = postedValues.link;
-        let datePaid = postedValues.datepaid;
-        let dateFor = postedValues.datefor;
-        let accountDescription = postedValues.description;
-        let costCenter = postedValues.cost_center;
-        let debitCash = postedValues.debit_cash;
-        let creditCash = postedValues.credit_cash;
-        let debitBank = postedValues.debit_bank;
-        let creditBank = postedValues.credit_bank;
-        let paymentMode = postedValues.pmode;
-        let accountCurrency = postedValues.currency;
-        let rateToUSD = postedValues.rate_to_usd;
-        let rateOnValue = postedValues.rate_on_value;
-        let accountValue = postedValues.value;
-        let requestBy = postedValues.requester;
-        let isConfirmed = postedValues.confirmed;
-        let isAuthorized = postedValues.authorized;
-        let isCommitted = postedValues.comitted;
-        let transactionReference = postedValues.txn_reference;
-        let flag = postedValues.flag;
-        let commnent = postedValues.comment;
-        let accountName = postedValues.acc_name; 
-        let results = await cashBankDbOperations.postCashBank(
-            indexAccId, indexAccName, dualTransAccName, dualTransAccNameId, accountMapId, accountLink, datePaid, dateFor, accountDescription, costCenter, debitCash, creditCash, debitBank, creditBank, paymentMode, accountCurrency, rateToUSD, rateOnValue, accountValue, requestBy, isConfirmed, isAuthorized, isCommitted, transactionReference, flag, commnent, accountName
+        let projectCode = postedValues.projectCode;
+        let projectName = postedValues.projectName;
+        let projectSummary = postedValues.projectSummary;
+        let createdOn = postedValues.createdOn;
+        let createdBy = postedValues.createdBy;
+       
+        let results = await projectDbOperations.postProject(
+            projectCode, projectName, projectSummary, createdOn, createdBy
         );
         res.json(results);
     } catch (e) {
@@ -42,9 +22,9 @@ cashBankRouter.post('/', async (req, res, next) => {
     }
 })
 
-cashBankRouter.get('/', async (req, res, next) => {
+projectRouter.get('/', async (req, res, next) => {
     try {
-        let results = await cashBankDbOperations.getCashBanks();
+        let results = await projectDbOperations.getProjects();
         res.json(results);
     } catch (e) {
         console.log(e);
@@ -52,10 +32,10 @@ cashBankRouter.get('/', async (req, res, next) => {
     }
 });
 
-cashBankRouter.get('/:id', async (req, res, next) => {
+projectRouter.get('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;
-        let result = await cashBankDbOperations.getCashBankById(id);
+        let result = await projectDbOperations.getProjectById(id);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -63,10 +43,10 @@ cashBankRouter.get('/:id', async (req, res, next) => {
     }
 });
 
-cashBankRouter.get('/acc/:name', async (req, res, next) => {
+projectRouter.get('/acc/:name', async (req, res, next) => {
     try {
         let name = req.params.name;
-        let result = await cashBankDbOperations.getCashBankByName(name);
+        let result = await projectDbOperations.getProjectByName(name);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -74,7 +54,7 @@ cashBankRouter.get('/acc/:name', async (req, res, next) => {
     }
 });
 
-cashBankRouter.put('/:id', async (req, res, next) => {
+projectRouter.put('/:id', async (req, res, next) => {
     try {
         let updatedValues = req.body;
         let id = req.params.id;
@@ -105,7 +85,7 @@ cashBankRouter.put('/:id', async (req, res, next) => {
         let flag = updatedValues.flag;
         let commnent = updatedValues.comment;
         let accountName = updatedValues.acc_name;
-        let result = await cashBankDbOperations.updateCashBank(
+        let result = await projectDbOperations.updateProject(
             id, indexAccId, indexAccName, dualTransAccName, dualTransAccNameId, accountMapId, accountLink, datePaid, dateFor, accountDescription, costCenter, debitCash, creditCash, debitBank, creditBank, paymentMode, accountCurrency, rateToUSD, rateOnValue, accountValue, requestBy, isConfirmed, isAuthorized, isCommitted, transactionReference, flag, commnent, accountName
         );
         res.json(result);
@@ -115,10 +95,10 @@ cashBankRouter.put('/:id', async (req, res, next) => {
     }
 });
 
-cashBankRouter.delete('/:id', async (req, res, next) => {
+projectRouter.delete('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;
-        let result = await cashBankDbOperations.deleteCashBank(id);
+        let result = await projectDbOperations.deleteProject(id);
         res.json(result);
     } catch (e) {
         console.log(e);
@@ -126,4 +106,4 @@ cashBankRouter.delete('/:id', async (req, res, next) => {
     }
 });
 
-module.exports = cashBankRouter;
+module.exports = projectRouter;

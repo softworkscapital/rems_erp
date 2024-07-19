@@ -11,9 +11,11 @@ accountMapRouter.post('/', async (req, res, next) => {
         let accountName = postedValues.acc_account_name;
         let createdBy = postedValues.created_by;
         let isAuthorized = postedValues.authorized;
-        let accountCurrency = postedValues.currency;
+        let accountCurrency = postedValues.currency; 
+        let balance = postedValues.balance; 
+
         let results = await accountMapDbOperations.postAccountMap(
-            accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency
+            accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency, balance
         );
         res.json(results);
     } catch (e) {
@@ -52,10 +54,31 @@ accountMapRouter.get('/acc/maps', async (req, res, next) => {
         res.sendStatus(500);
     }
 });
-
-accountMapRouter.get('/acc/maps/index', async (req, res, next) => {
+accountMapRouter.get('/acc/maps/info/:id', async (req, res, next) => {
     try {
-        let results = await accountMapDbOperations.getAccountMapsInfo2();
+        let id = req.params.id;
+        let results = await accountMapDbOperations.getAccountMapsInfoById(id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+accountMapRouter.get('/acc/maps/all', async (req, res, next) => {
+    try {
+        let results = await accountMapDbOperations.getAccountMapsInfoAll();
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+accountMapRouter.get('/acc/maps/index/exp/:name', async (req, res, next) => {
+    try {
+        let name = req.params.name
+        let results = await accountMapDbOperations.getAccountMapsInfo2(name);
         res.json(results);
     } catch (e) {
         console.log(e);
