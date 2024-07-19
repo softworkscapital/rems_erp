@@ -3,9 +3,10 @@ const pool = require('./poolfile');
 
 let crudsObj = {};
 
-crudsObj.postAccountMap = (accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency) => {
+crudsObj.postAccountMap = ( accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency, balance) => {
+    console.log('CRUD: ',accountProjectId)
     return new Promise((resolve, reject) => {
-        pool.query('INSERT INTO fin_acc_account_map(fin_acc_account_info_id, fin_acc_account_project_id, created_on, acc_account_name, created_by, authorized, currency ) VALUES (?,?,?,?,?,?,?)', [accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency], (err, result) => {
+        pool.query('INSERT INTO fin_acc_account_map(fin_acc_account_info_id, fin_acc_account_project_id, created_on, acc_account_name, created_by, authorized, currency, balance ) VALUES (?,?,?,?,?,?,?,?)', [ accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency, balance], (err, result) => {
             if (err) {
                 return reject(err);
             }
@@ -28,6 +29,16 @@ crudsObj.getAccountMaps = () => {
 crudsObj.getAccountMapById = (id) => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM fin_acc_account_map WHERE fin_acc_account_map_id = ?', [id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+};
+crudsObj.getAccountMapsInfoById = (id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM fin_acc_account_map WHERE fin_acc_account_info_id = ?', [id], (err, results) => {
             if (err) {
                 return reject(err);
             }
