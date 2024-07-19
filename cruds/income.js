@@ -27,7 +27,7 @@ crudsObj.getExpensesAccs = () => {
 
 crudsObj.getExpensesAccs2 = () => {
     return new Promise((resolve, reject) => {
-        pool.query('SELECT *, SUM(debit) AS total_debit FROM fin_acc_revenue_accounts', (err, results) => {
+        pool.query('SELECT *, SUM(value) AS total_debit FROM fin_acc_revenue_accounts', (err, results) => {
             if (err) {
                 return reject(err);
             }
