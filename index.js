@@ -17,8 +17,10 @@ const accountInfoRouter = require('./routes/account_info');
 const accountLinkingRouter = require('./routes/account_linking');
 const expensesAccRouter = require('./routes/expensesAcc');
 const accountMapRouter = require('./routes/account_map');
-const cashBankRouter = require('./routes/cash_bank')
-
+const cashBankRouter = require('./routes/cash_bank');
+const directExpensesRouter = require('./routes/direct_expenses');
+const projectRouter = require('./routes/projects');
+const incomeRouter = require('./routes/income');
 
 const app = express();
 app.use(express.json());
@@ -33,22 +35,25 @@ app.use('/costcenter', costCenterRouter);
 app.use('/accountinfo', accountInfoRouter);
 app.use('/accountlinking', accountLinkingRouter);
 app.use('/expensesacc', expensesAccRouter);
+app.use('/directexpenses', directExpensesRouter);
 app.use('/accountmap', accountMapRouter);
 app.use('/cashbank', cashBankRouter);
+app.use('/projects', projectRouter);
+app.use('/income', incomeRouter);
 
 app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
 })
 
-// const options = {
-//   cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
-//   key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
-// };
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
+};
 
-// https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
-//   console.log('app is listening to port' + process.env.APPPORT);
-// });
-
-app.listen(process.env.APPPORT || '3003', () => {
-    console.log('app is listening to port' + process.env.APPPORT);
+https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
+  console.log('app is listening to port' + process.env.APPPORT);
 });
+
+// app.listen(process.env.APPPORT || '3003', () => {
+//     console.log('app is listening to port' + process.env.APPPORT);
+// });
