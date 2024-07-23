@@ -49,6 +49,16 @@ incomeRouter.get('/', async (req, res, next) => {
     }
 });
 
+incomeRouter.get('/get/acc/limit', async (req, res, next) => {
+    try {
+        let results = await incomeDbOperations.getExpensesHistory();
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 incomeRouter.get('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;

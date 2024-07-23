@@ -49,6 +49,16 @@ directExpensesRouter.get('/', async (req, res, next) => {
     }
 });
 
+directExpensesRouter.get('/get/acc/limit', async (req, res, next) => {
+    try {
+        let results = await directExpensesDbOperations.getExpensesHistory();
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 directExpensesRouter.get('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;

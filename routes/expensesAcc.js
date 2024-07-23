@@ -49,6 +49,16 @@ expensesAccRouter.get('/', async (req, res, next) => {
     }
 });
 
+expensesAccRouter.get('/get/acc/limit', async (req, res, next) => {
+    try {
+        let results = await expensesAccDbOperations.getExpensesHistory();
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 expensesAccRouter.get('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;

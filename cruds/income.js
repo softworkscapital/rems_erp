@@ -25,6 +25,17 @@ crudsObj.getExpensesAccs = () => {
     })
 };
 
+crudsObj.getExpensesHistory = () => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM fin_acc_revenue_accounts ORDER BY fin_acc_admin_expenses_accounts_id DESC LIMIT 3', (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+};
+
 crudsObj.getExpensesAccs2 = () => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT *, SUM(value) AS total_debit FROM fin_acc_revenue_accounts', (err, results) => {
