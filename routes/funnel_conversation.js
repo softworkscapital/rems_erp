@@ -68,6 +68,18 @@ funnelConRouter.get('/funcon/:id', async (req, res, next) => {
     }
 });
 
+// Get by user  getFunnelConsJoin2
+funnelConRouter.get('/funcon/date/:id', async (req, res, next) => {
+    try {
+        let id = req.params.id;
+        let results = await funnelConDbOperations.getFunnelConsJoin3(id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 funnelConRouter.get('/funcon/byid/:id', async (req, res, next) => {
     try {
         let id = req.params.id;

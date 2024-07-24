@@ -55,7 +55,17 @@ crudsObj.getFunnelConsJoin = () => {
     })
 };
 
-// JOIN get by user id
+crudsObj.getFunnelConsJoin2 = (id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT funnel_conversation.*, prospect_details.prospect_name, prospect_details.prospect_surname FROM funnel_conversation LEFT JOIN prospect_details ON funnel_conversation.prospect_id = prospect_details.prospect_id WHERE funnel_conversation.user_id = ?',[id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+};
+
 crudsObj.getFunnelConsJoin2 = (id) => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT funnel_conversation.*, prospect_details.prospect_name, prospect_details.prospect_surname FROM funnel_conversation LEFT JOIN prospect_details ON funnel_conversation.prospect_id = prospect_details.prospect_id WHERE funnel_conversation.user_id = ?',[id], (err, results) => {
