@@ -32,7 +32,7 @@ userRouter.post('/', async (req, res, next) => {
     }
 })
 
-userRouter.post('/user/', async (req, res, next) => { 
+userRouter.post('/user/', async (req, res, next) => {
     try {
         let postedValues = req.body;
         let companyId = postedValues.companyId;
