@@ -21,6 +21,21 @@ const cashBankRouter = require('./routes/cash_bank');
 const directExpensesRouter = require('./routes/direct_expenses');
 const projectRouter = require('./routes/projects');
 const incomeRouter = require('./routes/income');
+const capitalAccRouter = require('./routes/capitalacc');
+
+//REMS POS ROUTES 
+const branchRouter = require('./routes_pos/branches');
+const currencyRouter = require('./routes_pos/currency');
+const salesPricesRouter = require('./routes_pos/sales_prices');
+const saleRecordRouter = require('./routes_pos/sale_records');
+const productDefinitionRouter = require('./routes_pos/product_definition');
+const inventoryMgtRouter = require('./routes_pos/inventorymgt');
+const shiftRouter = require('./routes_pos/shift');
+const shiftBalancesRouter = require('./routes_pos/shiftbalances');
+const CustomerRouter = require('./routes_pos/customer_details');
+const pettyCashRouter = require('./routes_pos/pettycash');
+const saleListRouter = require('./routes_pos/salelist');
+
 
 const app = express();
 app.use(express.json());
@@ -40,6 +55,20 @@ app.use('/accountmap', accountMapRouter);
 app.use('/cashbank', cashBankRouter);
 app.use('/projects', projectRouter);
 app.use('/income', incomeRouter);
+app.use('/capitalacc', capitalAccRouter);
+
+//POS Route Usage
+app.use('/branches', branchRouter);
+app.use('/currency', currencyRouter);
+app.use('/salesprice', salesPricesRouter);
+app.use('/salerecords', saleRecordRouter);
+app.use('/productdefinition', productDefinitionRouter);
+app.use('/inventorymgt', inventoryMgtRouter);
+app.use('/shift', shiftRouter);
+app.use('/shiftbalances', shiftBalancesRouter);
+app.use('/customers', CustomerRouter);
+app.use('/pettycash', pettyCashRouter);
+app.use('/salelist', saleListRouter);
 
 app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
