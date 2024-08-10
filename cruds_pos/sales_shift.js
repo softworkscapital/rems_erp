@@ -1,5 +1,5 @@
 require('dotenv').config();
-const pool = require('./poolfile');
+const pool = require('../cruds_gas_ecosystem/poolfile');
 
 let crudsObj = {};
 
@@ -25,9 +25,9 @@ crudsObj.getSalesShift = ()=>{
     })
 };
 
-crudsObj.getSalesShiftById = (id) => {
+crudsObj.getSalesShiftById = (id, company_id) => {
     return new Promise((resolve, reject)=>{
-        pool.query('SELECT * FROM sales_shifts WHERE sales_shifts_id = ?',[id], (err, results)=>{
+        pool.query('SELECT * FROM sales_shifts WHERE (branch_id = ? AND company_id = ? AND shift_status = "CLOSED") ORDER BY sales_shifts_id DESC LIMIT 1',[id, company_id], (err, results)=>{
             if(err){
                 return reject(err);
             }
