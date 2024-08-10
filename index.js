@@ -36,6 +36,10 @@ const CustomerRouter = require('./routes_pos/customer_details');
 const pettyCashRouter = require('./routes_pos/pettycash');
 const saleListRouter = require('./routes_pos/salelist');
 
+// REMS GAS
+const paymentRouter = require('./routes_gas_ecosystem/payments');
+const saleshiftRouter = require('./routes_pos/sales_shift');
+
 
 const app = express();
 app.use(express.json());
@@ -69,6 +73,10 @@ app.use('/shiftbalances', shiftBalancesRouter);
 app.use('/customers', CustomerRouter);
 app.use('/pettycash', pettyCashRouter);
 app.use('/salelist', saleListRouter);
+app.use('/saleshift', saleshiftRouter);
+
+//Gas
+app.use('/payments', paymentRouter);
 
 app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
