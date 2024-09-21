@@ -24,7 +24,7 @@ const incomeRouter = require('./routes/income');
 const capitalAccRouter = require('./routes/capitalacc');
 
 //REMS POS ROUTES 
-const branchRouter = require('./routes_pos/branches');
+//const branchRouter = require('./routes_pos/branches');
 const currencyRouter = require('./routes_pos/currency');
 const salesPricesRouter = require('./routes_pos/sales_prices');
 const saleRecordRouter = require('./routes_pos/sale_records');
@@ -38,7 +38,9 @@ const saleListRouter = require('./routes_pos/salelist');
 
 // REMS GAS
 const paymentRouter = require('./routes_gas_ecosystem/payments');
-const saleshiftRouter = require('./routes_pos/sales_shift');
+const salesShiftPosGasRouter = require('./routes_gas_ecosystem/sales_shift');
+const branchesRouter = require('./routes_gas_ecosystem/branchz');
+const InventoryRouter = require('./routes_gas_ecosystem/inventory');
 
 
 const app = express();
@@ -62,7 +64,7 @@ app.use('/income', incomeRouter);
 app.use('/capitalacc', capitalAccRouter);
 
 //POS Route Usage
-app.use('/branches', branchRouter);
+//app.use('/branches', branchRouter);
 app.use('/currency', currencyRouter);
 app.use('/salesprice', salesPricesRouter);
 app.use('/salerecords', saleRecordRouter);
@@ -73,10 +75,14 @@ app.use('/shiftbalances', shiftBalancesRouter);
 app.use('/customers', CustomerRouter);
 app.use('/pettycash', pettyCashRouter);
 app.use('/salelist', saleListRouter);
-app.use('/saleshift', saleshiftRouter);
+//app.use('/saleshift', saleshiftRouter);
 
 //Gas
 app.use('/payments', paymentRouter);
+app.use('/salesshiftgas', salesShiftPosGasRouter);
+app.use('/branches', branchesRouter);
+app.use('/inventory', InventoryRouter);
+
 
 app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
@@ -91,6 +97,6 @@ https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
   console.log('app is listening to port' + process.env.APPPORT);
 });
 
-// app.listen(process.env.APPPORT || '3003', () => {
-//     console.log('app is listening to port' + process.env.APPPORT);
-// });
+//  app.listen(process.env.APPPORT || '3003', () => {
+//      console.log('app is listening to port' + process.env.APPPORT);
+//  });
