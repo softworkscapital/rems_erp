@@ -161,6 +161,19 @@ saleshiftRouter.get('/', async (req, res, next) => {
     }
 });
 
+
+saleshiftRouter.get('/co/:id', async (req, res, next) => {
+    try {
+        let id = req.params.id;
+        
+        let results = await saleshistDbOperations.getSalesShiftByCo(id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 saleshiftRouter.get('/:id/:company_id', async (req, res, next) => {
     try {
         let id = req.params.id;

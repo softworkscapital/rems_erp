@@ -26,8 +26,19 @@ crudsObj.getSalesShiftById = (id, company_id) => {
     })
   };
 
+crudsObj.getSalesShiftByCo = (id) => {
+    return new Promise((resolve, reject)=>{
+      pool.query( 'SELECT * FROM sales_shifts WHERE (company_id = ? AND shift_status = "CLOSED") ORDER BY sales_shifts_id DESC', [id], (err, results)=>{
+        if(err){
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+  };
 
-crudsObj.getSalesShiftByCompanyId = (company_id) => {
+
+crudsObj.getSalesShiftByCompanyId = (company_id) => {//not used has error needs deleting
     return new Promise((resolve, reject)=>{
         pool.query( 'SELECT * FROM sales_shifts WHERE (company_id = ? AND shift_status = "CLOSED") ', [company_id], (err, results)=>{
           console.log('fetched'); 

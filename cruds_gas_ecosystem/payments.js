@@ -114,6 +114,21 @@ crudsObj.getPaymentsTotalSales = () => {
 //     });
 // };
 
+
+crudsObj.getPaymentsBranchesOnlineByCompanyId= (company_id) => {
+    const today = getTodayDate();
+    return new Promise((resolve, reject) => {
+        pool.query(`SELECT DISTINCT branch_id FROM payments WHERE (daterec = ? AND company_id = ?)`, [today, company_id ], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
+
 crudsObj.getPaymentsByBranch = (branch_id, company_id) => {
     const today = getTodayDate();
     return new Promise((resolve, reject) => {
