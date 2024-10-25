@@ -41,6 +41,9 @@ const paymentRouter = require('./routes_gas_ecosystem/payments');
 const salesShiftPosGasRouter = require('./routes_gas_ecosystem/sales_shift');
 const branchesRouter = require('./routes_gas_ecosystem/branchz');
 const InventoryRouter = require('./routes_gas_ecosystem/inventory');
+const productRouter = require('./routes_gas_ecosystem/products');
+const mkt_place_paymentRouter = require('./routes_gas_ecosystem/mkt_place_payments');
+const salesPriceRouter = require('./routes_gas_ecosystem/sales_prices');
 
 
 const app = express();
@@ -82,6 +85,9 @@ app.use('/payments', paymentRouter);
 app.use('/salesshiftgas', salesShiftPosGasRouter);
 app.use('/branches', branchesRouter);
 app.use('/inventory', InventoryRouter);
+app.use('/products', productRouter);
+app.use('/mkt_place_payments', mkt_place_paymentRouter);
+app.use('/salesprices', salesPriceRouter);
 
 
 app.get('/', (req, res) => {
@@ -97,6 +103,6 @@ https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
   console.log('app is listening to port' + process.env.APPPORT);
 });
 
-//  app.listen(process.env.APPPORT || '3003', () => {
+//  app.listen(process.env.APPPORT || '3009', () => {
 //      console.log('app is listening to port' + process.env.APPPORT);
 //  });

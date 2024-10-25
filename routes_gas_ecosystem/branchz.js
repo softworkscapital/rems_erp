@@ -77,6 +77,17 @@ branchesRouter.get('/branchname/:branch_id', async (req, res, next) => {
     }
 });
 
+branchesRouter.get('/branchstatus/:branch_id', async (req, res, next) => {
+    try {
+        let branch_id = req.params.branch_id;
+        let result = await branchDbOperations.getBranchStatusByBranchId(branch_id);
+        res.json(result);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 branchesRouter.put('/:id', async (req, res, next) => {
     try {
       let branch_id = req.params.id;
