@@ -125,15 +125,16 @@ app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
 })
 
-// const options = {
-//   cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
-//   key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
-// };
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
+};
 
-// https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
-//   console.log('app is listening to port' + process.env.APPPORT);
-// });
+https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
+  console.log('app is listening to port' + process.env.APPPORT);
+});
 
- app.listen(process.env.APPPORT || '3009', () => {
-     console.log('app is listening to port' + process.env.APPPORT);
- });
+//  app.listen(process.env.APPPORT || '3009', () => {
+//      console.log('app is listening to port' + process.env.APPPORT);
+//  });
+//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
