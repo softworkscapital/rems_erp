@@ -25,7 +25,7 @@ crudsObj.getProductDefinitions = ()=>{
     })
 };
 
-crudsObj.getProductDefinitionsPrice = ()=>{
+crudsObj.getFullProductDefinitions = ()=>{
     return new Promise((resolve, reject)=>{
         pool.query('SELECT products_definition.*, inventory_mgt.selling_price, inventory_mgt.unit_cost, inventory_mgt.qty_balance FROM products_definition INNER JOIN inventory_mgt ON products_definition.product_id = inventory_mgt.product_id', (err, results)=>{
             if(err){

@@ -25,6 +25,22 @@ crudsObj.getAccountInfos = () => {
     })
 };
 
+
+crudsObj.getAccountInfoByIdAndCompanyId = (id,companyId) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM fin_acc_account_info WHERE fin_acc_account_info_id = ? and company_id = ? ', [id][companyId], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+};
+
+
+
+
+
 crudsObj.getAccountInfoById = (id) => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT * FROM fin_acc_account_info WHERE fin_acc_account_info_id = ?', [id], (err, results) => {
@@ -72,5 +88,10 @@ crudsObj.deleteAccountInfo = (id) => {
         })
     })
 };
+
+
+
+
+
 
 module.exports = crudsObj;

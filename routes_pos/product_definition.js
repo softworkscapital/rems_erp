@@ -32,9 +32,9 @@ productDefinitionRouter.get('/', async (req, res, next) => {
     }
 });
 
-productDefinitionRouter.get('/join/prices', async (req, res, next) => {
+productDefinitionRouter.get('/full_products_definations', async (req, res, next) => {
     try {
-        let results = await productDefinitionDbOperations.getProductDefinitionsPrice();
+        let results = await productDefinitionDbOperations.getFullProductDefinitions();
         res.json(results);
     } catch (e) {
         console.log(e);

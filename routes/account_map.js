@@ -5,6 +5,15 @@ const accountMapDbOperations = require('../cruds/account_map');
 accountMapRouter.post('/', async (req, res, next) => {
     try {
         let postedValues = req.body;
+
+        // Extract all necessary fields from the request body
+        let cooperateBankId = postedValues.cooperate_bank_id;
+
+        // Log the value to ensure it's being captured correctly
+        console.log('Cooperate Bank ID:', cooperateBankId);
+
+        // Other fields...
+        let finAccAccountMapId = postedValues.fin_acc_account_map_id;
         let accountInfoId = postedValues.fin_acc_account_info_id;
         let accountProjectId = postedValues.fin_acc_account_project_id;
         let createdOn = postedValues.created_on;
@@ -12,17 +21,54 @@ accountMapRouter.post('/', async (req, res, next) => {
         let createdBy = postedValues.created_by;
         let isAuthorized = postedValues.authorized;
         let accountCurrency = postedValues.currency; 
-        let balance = postedValues.balance; 
+        let groupId = postedValues.group_id;
+        let prospectId = postedValues.prospect_id;
+        let currentPeriodSubAccount1 = postedValues.current_period_sub_account_1;
+        let currentPeriodSubAccount2 = postedValues.current_period_sub_account_2;
+        let currentPeriodSubAccount3 = postedValues.current_period_sub_account_3;
+        let currentPeriodSubAccount4 = postedValues.current_period_sub_account_4;
+        let currentPeriodSubAccount5 = postedValues.current_period_sub_account_5;
+        let currentPeriodBalance = postedValues.current_period_balance;
+        let accountBalanceToDateSubAccount1 = postedValues.account_balance_todate_sub_account_1;
+        let accountBalanceToDateSubAccount2 = postedValues.account_balance_todate_sub_account_2;
+        let accountBalanceToDateSubAccount3 = postedValues.account_balance_todate_sub_account_3;
+        let accountBalanceToDateSubAccount4 = postedValues.account_balance_todate_sub_account_4;
+        let accountBalanceToDateSubAccount5 = postedValues.account_balance_todate_sub_account_5;
+        let balance = postedValues.balance;
 
+        // Call the database operation to insert the account map
         let results = await accountMapDbOperations.postAccountMap(
-            accountInfoId, accountProjectId, createdOn, accountName, createdBy, isAuthorized, accountCurrency, balance
+            finAccAccountMapId,
+            accountInfoId,
+            accountProjectId,
+            cooperateBankId, // Ensure this is passed correctly
+            createdOn,
+            accountName,
+            createdBy,
+            isAuthorized,
+            accountCurrency,
+            groupId,
+            prospectId,
+            currentPeriodSubAccount1,
+            currentPeriodSubAccount2,
+            currentPeriodSubAccount3,
+            currentPeriodSubAccount4,
+            currentPeriodSubAccount5,
+            currentPeriodBalance,
+            accountBalanceToDateSubAccount1,
+            accountBalanceToDateSubAccount2,
+            accountBalanceToDateSubAccount3,
+            accountBalanceToDateSubAccount4,
+            accountBalanceToDateSubAccount5,
+            balance
         );
+
         res.json(results);
     } catch (e) {
         console.log(e);
         res.sendStatus(500);
     }
-})
+});
 
 accountMapRouter.get('/', async (req, res, next) => {
     try {

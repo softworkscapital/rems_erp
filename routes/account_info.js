@@ -44,6 +44,21 @@ accountInfoRouter.get('/:id', async (req, res, next) => {
     }
 });
 
+
+accountInfoRouter.get('/account_info_by_company_id/:id/:company_id', async (req, res, next) => {
+    try {
+        let id = req.params.id;
+        let company_id = req.params.company_id;
+        let result = await accountInfoDbOperations.getAccountInfoByIdAndCompanyId(id,company_id);
+        res.json(result);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+
 accountInfoRouter.get('/type/:name', async (req, res, next) => {
     try {
         let name = req.params.name;

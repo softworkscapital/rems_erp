@@ -14,6 +14,7 @@ const funnelConRouter = require('./routes/funnel_conversation');
 const prospectsRouter = require('./routes/prospect_details');
 const costCenterRouter = require('./routes/cost_center');
 const accountInfoRouter = require('./routes/account_info');
+
 const accountLinkingRouter = require('./routes/account_linking');
 const expensesAccRouter = require('./routes/expensesAcc');
 const accountMapRouter = require('./routes/account_map');
@@ -22,8 +23,15 @@ const directExpensesRouter = require('./routes/direct_expenses');
 const projectRouter = require('./routes/projects');
 const incomeRouter = require('./routes/income');
 const capitalAccRouter = require('./routes/capitalacc');
+const finAccInvestmentFundDetailsRouter =require("./routes/fin_acc_investment_fund_details");
+const finAccInvestmentAssetsAccountRouter =require("./routes/fin_acc_investment_assets_account");
+const finAccPurchaseInvestmentAssetsAppraisalRouter =require("./routes/fin_acc_purchase_investment_assets_appraisal");
+const YearlyAccountTotalsRouter =require("./routes/bi_sums_yearly_account_totals");
+const CurrentDailyAccountTotalsRouter =require("./routes/bi_sums_current_day_account_totals");
+const MonthlyAccountTotalsRouter =require("./routes/bi_sums_monthly_account_totals");
+const PayOutsAccRouter =require("./routes/fin_acc_pay_outs_accounts");
 
-//REMS POS ROUTES 
+//REMS BUSINESS SUITE PROFESSIONAL POS / TILL POINT
 //const branchRouter = require('./routes_pos/branches');
 const currencyRouter = require('./routes_pos/currency');
 const salesPricesRouter = require('./routes_pos/sales_prices');
@@ -35,6 +43,11 @@ const shiftBalancesRouter = require('./routes_pos/shiftbalances');
 const CustomerRouter = require('./routes_pos/customer_details');
 const pettyCashRouter = require('./routes_pos/pettycash');
 const saleListRouter = require('./routes_pos/salelist');
+const salesInvoiceRouter = require('./routes_pos/sales_invoices');
+const quotationProformaInvoiceRouter = require('./routes_pos/quotation_profoma_invoices');
+
+
+
 
 // REMS GAS
 const paymentRouter = require('./routes_gas_ecosystem/payments');
@@ -44,6 +57,12 @@ const InventoryRouter = require('./routes_gas_ecosystem/inventory');
 const productRouter = require('./routes_gas_ecosystem/products');
 const mkt_place_paymentRouter = require('./routes_gas_ecosystem/mkt_place_payments');
 const salesPriceRouter = require('./routes_gas_ecosystem/sales_prices');
+const uploadedFilesRouter = require('./routes_pos/uploaded_files');
+
+
+
+const MemberRouter =require("./routes/members");
+
 
 
 const app = express();
@@ -57,6 +76,7 @@ app.use('/funnelcon', funnelConRouter);
 app.use('/prospects', prospectsRouter);
 app.use('/costcenter', costCenterRouter);
 app.use('/accountinfo', accountInfoRouter);
+
 app.use('/accountlinking', accountLinkingRouter);
 app.use('/expensesacc', expensesAccRouter);
 app.use('/directexpenses', directExpensesRouter);
@@ -65,6 +85,14 @@ app.use('/cashbank', cashBankRouter);
 app.use('/projects', projectRouter);
 app.use('/income', incomeRouter);
 app.use('/capitalacc', capitalAccRouter);
+app.use("/fin_acc_investment_fund_details", finAccInvestmentFundDetailsRouter);
+app.use("/fin_acc_investment_assets_account", finAccInvestmentAssetsAccountRouter);
+app.use("/fin_acc_purchase_investment_assets_appraisal", finAccPurchaseInvestmentAssetsAppraisalRouter);
+app.use("/bi_sum_yearly_account_totals", YearlyAccountTotalsRouter);
+app.use("/bi_sum_current_daily_account_totals", CurrentDailyAccountTotalsRouter);
+app.use("/bi_sum_monthly_account_totals", MonthlyAccountTotalsRouter);
+app.use("/fin_acc_pay_outs_accounts", PayOutsAccRouter);
+
 
 //POS Route Usage
 //app.use('/branches', branchRouter);
@@ -88,21 +116,24 @@ app.use('/inventory', InventoryRouter);
 app.use('/products', productRouter);
 app.use('/mkt_place_payments', mkt_place_paymentRouter);
 app.use('/salesprices', salesPriceRouter);
+app.use('/sales_invoices', salesInvoiceRouter);
+app.use('/quotationprofomainvoices', quotationProformaInvoiceRouter);
+app.use('/uploadedfiles', uploadedFilesRouter);
 
 
 app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
 })
 
-const options = {
-  cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
-  key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
-};
+// const options = {
+//   cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
+//   key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
+// };
 
-https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
-  console.log('app is listening to port' + process.env.APPPORT);
-});
+// https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
+//   console.log('app is listening to port' + process.env.APPPORT);
+// });
 
-//  app.listen(process.env.APPPORT || '3009', () => {
-//      console.log('app is listening to port' + process.env.APPPORT);
-//  });
+ app.listen(process.env.APPPORT || '3009', () => {
+     console.log('app is listening to port' + process.env.APPPORT);
+ });

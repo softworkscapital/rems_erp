@@ -3,9 +3,9 @@ const pool = require('./poolfile');
 
 let crudsObj = {};
 
-crudsObj.postInvetoryMgt = (company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, syncid)=>{
+crudsObj.postInvetoryMgt = (company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price,pic1, pic2, pic3, syncid)=>{
     return new Promise((resolve, reject)=>{
-        pool.query('INSERT INTO inventory_mgt(company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, syncid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)',[company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, syncid], (err, result)=>{
+        pool.query('INSERT INTO inventory_mgt(company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price,pic1, pic2, pic3, syncid) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',[company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price,pic1, pic2, pic3, syncid], (err, result)=>{
             if(err){
                 return reject(err);
             }
@@ -47,11 +47,11 @@ crudsObj.getInvetoryMgtByProductId = () => {
     })
   };
 
-  crudsObj.updateInvetoryMgt = (id, company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, syncid) => {
+  crudsObj.updateInvetoryMgt = (id, company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, pic1, pic2, pic3, syncid) => {
     console.log(unit_cost);
     return new Promise((resolve, reject) => {
       pool.query(
-        'UPDATE inventory_mgt SET company_id = ? ,branch_id = ? , sale_records_id = ? , product_id = ? , date_time = ? , qty_purchased = ? , qty_sold = ? , qty_balance = ? , product_value_cost = ? , product_value_selling_price = ? , unit_cost = ? , selling_price = ? , syncid = ? WHERE inventory_mgt_id = ?',
+        'UPDATE inventory_mgt SET company_id = ? ,branch_id = ? , sale_records_id = ? , product_id = ? , date_time = ? , qty_purchased = ? , qty_sold = ? , qty_balance = ? , product_value_cost = ? , product_value_selling_price = ? , unit_cost = ? , selling_price = ? ,pic1 = ?, pic2 = ?, pic3 = ?, syncid = ? WHERE inventory_mgt_id = ?',
         [company_id,branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, syncid, id],
         (err, result) => {
           if (err) {
