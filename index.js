@@ -7,6 +7,15 @@ const https = require('https');
 const path = require('path');
 const fs = require('fs');
 
+
+const corsOptions = {
+    origin: "*", 
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  };
+  
+
+
 // Route path
 const userRouter = require('./routes/users');
 const clientRouter = require('./routes/client_profile');
@@ -14,6 +23,9 @@ const funnelConRouter = require('./routes/funnel_conversation');
 const prospectsRouter = require('./routes/prospect_details');
 const costCenterRouter = require('./routes/cost_center');
 const accountInfoRouter = require('./routes/account_info');
+const SurveyAnswerRouter = require('./routes/survey_answers');
+const SurveyQuestionRouter = require('./routes/survey_questions');
+const SurveyRouter = require('./routes/surveys');
 
 const accountLinkingRouter = require('./routes/account_linking');
 const expensesAccRouter = require('./routes/expensesAcc');
@@ -32,7 +44,7 @@ const MonthlyAccountTotalsRouter =require("./routes/bi_sums_monthly_account_tota
 const PayOutsAccRouter =require("./routes/fin_acc_pay_outs_accounts");
 
 //REMS BUSINESS SUITE PROFESSIONAL POS / TILL POINT
-//const branchRouter = require('./routes_pos/branches');
+ const branchRouter = require('./routes_pos/branches');
 const currencyRouter = require('./routes_pos/currency');
 const salesPricesRouter = require('./routes_pos/sales_prices');
 const saleRecordRouter = require('./routes_pos/sale_records');
@@ -43,16 +55,19 @@ const shiftBalancesRouter = require('./routes_pos/shiftbalances');
 const CustomerRouter = require('./routes_pos/customer_details');
 const pettyCashRouter = require('./routes_pos/pettycash');
 const saleListRouter = require('./routes_pos/salelist');
+// const CompanyRouter = require('./routes_gas/company');
 const salesInvoiceRouter = require('./routes_pos/sales_invoices');
 const quotationProformaInvoiceRouter = require('./routes_pos/quotation_profoma_invoices');
+const companySetupRouter = require('./routes_pos/company_setup');
 
 
 
 
 // REMS GAS
-const paymentRouter = require('./routes_gas_ecosystem/payments');
+// /const paymentRouter = require('./routes_gas_ecosystem/payments');
 const salesShiftPosGasRouter = require('./routes_gas_ecosystem/sales_shift');
 const branchesRouter = require('./routes_gas_ecosystem/branchz');
+
 const InventoryRouter = require('./routes_gas_ecosystem/inventory');
 const productRouter = require('./routes_gas_ecosystem/products');
 const mkt_place_paymentRouter = require('./routes_gas_ecosystem/mkt_place_payments');
@@ -62,6 +77,7 @@ const uploadedFilesRouter = require('./routes_pos/uploaded_files');
 
 
 const MemberRouter =require("./routes/members");
+
 
 
 
@@ -76,6 +92,9 @@ app.use('/funnelcon', funnelConRouter);
 app.use('/prospects', prospectsRouter);
 app.use('/costcenter', costCenterRouter);
 app.use('/accountinfo', accountInfoRouter);
+app.use('/survey_answers', SurveyAnswerRouter);
+app.use('/surveyquestions', SurveyQuestionRouter);
+app.use('/surveys', SurveyRouter);
 
 app.use('/accountlinking', accountLinkingRouter);
 app.use('/expensesacc', expensesAccRouter);
@@ -95,7 +114,7 @@ app.use("/fin_acc_pay_outs_accounts", PayOutsAccRouter);
 
 
 //POS Route Usage
-//app.use('/branches', branchRouter);
+app.use('/branches', branchRouter);
 app.use('/currency', currencyRouter);
 app.use('/salesprice', salesPricesRouter);
 app.use('/salerecords', saleRecordRouter);
@@ -106,20 +125,24 @@ app.use('/shiftbalances', shiftBalancesRouter);
 app.use('/customers', CustomerRouter);
 app.use('/pettycash', pettyCashRouter);
 app.use('/salelist', saleListRouter);
+// app.use('/company', CompanyRouter);
 //app.use('/saleshift', saleshiftRouter);
 
 //Gas
-app.use('/payments', paymentRouter);
+// app.use('/payments', paymentRouter);
 app.use('/salesshiftgas', salesShiftPosGasRouter);
 app.use('/branches', branchesRouter);
 app.use('/inventory', InventoryRouter);
+
+
 app.use('/products', productRouter);
 app.use('/mkt_place_payments', mkt_place_paymentRouter);
 app.use('/salesprices', salesPriceRouter);
 app.use('/sales_invoices', salesInvoiceRouter);
 app.use('/quotationprofomainvoices', quotationProformaInvoiceRouter);
 app.use('/uploadedfiles', uploadedFilesRouter);
-
+app.use('/companysetup', companySetupRouter);
+app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
@@ -137,4 +160,4 @@ https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
 //  app.listen(process.env.APPPORT || '3009', () => {
 //      console.log('app is listening to port' + process.env.APPPORT);
 //  });
-//mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
+// //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm

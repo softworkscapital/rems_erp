@@ -20,7 +20,7 @@ userRouter.post('/', async (req, res, next) => {
         let delivery = postedValues.delivery;
         let status = postedValues.status;
         let employee_id = postedValues.employee_id;
-        // let client_profile_id = postedValues.client_profile_id;
+        let client_profile_id = postedValues.client_profile_id;
 
         console.log(email);
 

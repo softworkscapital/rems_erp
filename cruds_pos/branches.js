@@ -36,6 +36,48 @@ crudsObj.getBranchById = (branch_id) => {
     })
   };
 
+
+  crudsObj.getBranchNameByBranchId = (branchID) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT branch_name FROM branches WHERE branch_id = ?', [branchID], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
+
+  crudsObj.getBranchNamesById = (company_id) => {
+    return new Promise((resolve, reject)=>{
+        pool.query('SELECT branch_name ,branch_id FROM branches WHERE company_id = ?',[company_id], (err, results)=>{
+            if(err){
+                return reject(err);
+            }
+            return resolve(results);
+        })
+    })
+  };
+
+
+
+  crudsObj.getBranchIdByBranchName = (branchName) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT branch_id FROM branches WHERE branch_name = ?', [branchName], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
+
+
+
   crudsObj.updateBranch = (id, branch_name,branch_location, branch_location_notes, branch_city, latitude, longitude, company_id, company_name, enrolled_on, enrolled_by, phone, email, sync_interval, branch_reorder_level_kgs, auto_branch_reorder_status, inventory_level, inventory_storage_capacity, rems_subscription_id, transactions_volume_limit_kgs, expiry_date) => {
     return new Promise((resolve, reject) => {
       pool.query(

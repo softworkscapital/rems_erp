@@ -56,6 +56,53 @@ branchRouter.get('/:id', async (req, res, next) => {
 });
 
 
+branchRouter.get('/branch_name/:branch_id', async (req, res, next) => {
+    try {
+        const branch_id = req.params.branch_id;
+        const result = await branchDbOperations.getBranchNameByBranchId(branch_id);
+
+        // Check if a branch was found
+        if (result.length === 0) {
+            return res.status(404).json({ message: 'Branch not found' });
+        }
+
+        // Assuming result[0] contains the branch_name
+        res.json(result[0]); // Return the first result
+    } catch (e) {
+        console.error(e); // Use console.error for error logging
+        res.sendStatus(500);
+    }
+});
+
+
+branchRouter.get('/branch_name/company/:id', async (req, res, next) => {
+    try {
+        let company_id = req.params.id;
+        let result = await branchDbOperations.getBranchNamesById(company_id);
+        res.json(result);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+
+
+branchRouter.get('/branch_id/:branch_name', async (req, res, next) => {
+    try {
+        let branch_name = req.params.branch_name;
+        let result = await branchDbOperations.getBranchIdByBranchName(branch_name);
+        res.json(result);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+
+
 branchRouter.put('/:id', async (req, res, next) => {
     try {
       let branch_id = req.params.id;
