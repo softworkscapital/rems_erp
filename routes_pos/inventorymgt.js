@@ -31,6 +31,8 @@ inventoryMgtRouter.post('/', async (req, res, next) => {
     }
 });
 
+
+
 inventoryMgtRouter.get('/', async (req, res, next) => {
     try {
         let results = await inventoryMgtDbOperations.getInvetoryMgt();
@@ -40,6 +42,8 @@ inventoryMgtRouter.get('/', async (req, res, next) => {
         res.sendStatus(500);
     }
 });
+
+
 
 inventoryMgtRouter.get('/:id', async (req, res, next) => {
     try {
@@ -51,6 +55,8 @@ inventoryMgtRouter.get('/:id', async (req, res, next) => {
         res.sendStatus(500);
     }
 });
+
+
 
 inventoryMgtRouter.get('/inventory/products', async (req, res, next) => {
     try {
@@ -101,6 +107,8 @@ inventoryMgtRouter.put('/:id', async (req, res, next) => {
         res.sendStatus(500);
     }
 });
+
+
 
 inventoryMgtRouter.delete('/:id', async (req, res, next) => {
     try {
