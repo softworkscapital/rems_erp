@@ -126,6 +126,8 @@ crudsObj.getFullProductDefinitions = ()=>{
     })
 };
 
+
+
 // getClentById
 crudsObj.getProductDefinitionById = (id) => {
     return new Promise((resolve, reject)=>{

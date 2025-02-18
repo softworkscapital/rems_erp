@@ -91,7 +91,6 @@ crudsObj.getCompanySetupById = (id) => {
     });
 };
 
-
 crudsObj.getCompanyNameByCompanyId = (companyID) => {
     return new Promise((resolve, reject) => {
         pool.query('SELECT name FROM company_setup WHERE company_id = ?', [companyID], (err, results) => {
@@ -102,7 +101,6 @@ crudsObj.getCompanyNameByCompanyId = (companyID) => {
         });
     });
 };
-
 
 crudsObj.updateCompanySetup = (
     company_setup_id, company_id, name, address, registration_number, industry,
