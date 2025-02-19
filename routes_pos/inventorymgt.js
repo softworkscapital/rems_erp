@@ -18,12 +18,9 @@ inventoryMgtRouter.post('/', async (req, res, next) => {
         let product_value_selling_price = postedValues.product_value_selling_price;
         let unit_cost = postedValues.unit_cost;
         let selling_price = postedValues.selling_price;
-        let pic1 = postedValues.pic1;
-        let pic2 = postedValues.pic2;
-        let pic3 = postedValues.pic3;
         let syncid = postedValues.syncid;
 
-        let results = await inventoryMgtDbOperations.postInvetoryMgt(company_id, branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, pic1, pic2, pic3, syncid);
+        let results = await inventoryMgtDbOperations.postInvetoryMgt(company_id, branch_id, sale_records_id, product_id, date_time, qty_purchased, qty_sold, qty_balance, product_value_cost, product_value_selling_price, unit_cost, selling_price, syncid);
         res.json(results);
     } catch (e) {
         console.log(e);
@@ -84,9 +81,6 @@ inventoryMgtRouter.put('/:id', async (req, res, next) => {
         let product_value_selling_price = postedValues.product_value_selling_price;
         let unit_cost = postedValues.unit_cost;
         let selling_price = postedValues.selling_price;
-        let pic1 = postedValues.pic1;
-        let pic2 = postedValues.pic2;
-        let pic3 = postedValues.pic3;
         let syncid = postedValues.syncid;
 
         console.log(unit_cost);
@@ -99,7 +93,7 @@ inventoryMgtRouter.put('/:id', async (req, res, next) => {
             product_id,
             date_time,
             qty_purchased,
-            qty_sold, qty_balance, product_value_cost, product_value_selling_price, selling_price, unit_cost,pic1, pic2, pic3,  syncid
+            qty_sold, qty_balance, product_value_cost, product_value_selling_price, selling_price, unit_cost, syncid
         );
         res.json(result);
     } catch (e) {

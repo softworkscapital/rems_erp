@@ -30,6 +30,12 @@ crudsObj.postProductDefinition = (
     views_count,
     likes_count,
     uploaded_product_image_ref,
+    uploaded_product_image_ref2,
+    uploaded_product_image_ref3,
+    uploaded_product_image_ref4,
+    uploaded_product_image_ref5,
+    uploaded_product_image_ref6,
+    uploaded_product_image_ref7,
     syncid
 ) => {
     return new Promise((resolve, reject) => {
@@ -56,13 +62,19 @@ crudsObj.postProductDefinition = (
                 color,
                 popularity,
                 shipping_days,
-                   \`condition\`, 
+                \`condition\`, 
                 reviews_count,
                 views_count,
                 likes_count,
                 uploaded_product_image_ref,
+                uploaded_product_image_ref2,
+                uploaded_product_image_ref3,
+                uploaded_product_image_ref4,
+                uploaded_product_image_ref5,
+                uploaded_product_image_ref6,
+                uploaded_product_image_ref7,
                 syncid
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)`,
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?, ?, ?)`,
             [
                 product_code,
                 company_id,
@@ -90,6 +102,12 @@ crudsObj.postProductDefinition = (
                 views_count,
                 likes_count,
                 uploaded_product_image_ref,
+                uploaded_product_image_ref2,
+                uploaded_product_image_ref3,
+                uploaded_product_image_ref4,
+                uploaded_product_image_ref5,
+                uploaded_product_image_ref6,
+                uploaded_product_image_ref7,
                 syncid
             ],
             (err, result) => {
@@ -102,68 +120,64 @@ crudsObj.postProductDefinition = (
     });
 };
 
-
-
-crudsObj.getProductDefinitions = ()=>{
-    return new Promise((resolve, reject)=>{
-        pool.query('SELECT * FROM products_definition', (err, results)=>{
-            if(err){
-                return reject(err);
-            }
-            return resolve(results);
-        })
-    })
-};
-
-crudsObj.getFullProductDefinitions = ()=>{
-    return new Promise((resolve, reject)=>{
-        pool.query('SELECT products_definition.*, inventory_mgt.selling_price, inventory_mgt.unit_cost, inventory_mgt.qty_balance FROM products_definition INNER JOIN inventory_mgt ON products_definition.product_id = inventory_mgt.product_id', (err, results)=>{
-            if(err){
-                return reject(err);
-            }
-            return resolve(results);
-        })
-    })
-};
-
-
-
-// getClentById
-crudsObj.getProductDefinitionById = (id) => {
-    return new Promise((resolve, reject)=>{
-        pool.query('SELECT * FROM products_definition WHERE product_id = ?',[id], (err, results)=>{
-            if(err){
-                return reject(err);
-            }
-            return resolve(results);
-        })
-    })
-  };
-
-  crudsObj.updateProductDefinition = (product_id, company_id, branch_id, product_name, unit_of_measure, unit_size, syncid) => {
+crudsObj.getProductDefinitions = () => {
     return new Promise((resolve, reject) => {
-      pool.query(
-        'UPDATE products_definition SET company_id = ?, branch_id = ?, product_name = ?, unit_of_measure = ?, unit_size = ?, syncid = ? WHERE product_id = ?',
-        [company_id, branch_id, product_name, unit_of_measure, unit_size, syncid, product_id],
-        (err, result) => {
-          if (err) {
-            return reject(err);
-          }
-          return resolve({ status: '200', message: 'update successful' });
-        }
-      );
-    });
-  };
-
-  crudsObj.deleteProductDefinition = (id) => {
-    return new Promise((resolve, reject)=>{
-        pool.query('DELETE FROM products_definition WHERE product_id = ?',[id], (err, results)=>{
-            if(err){
+        pool.query('SELECT * FROM products_definition', (err, results) => {
+            if (err) {
                 return reject(err);
             }
             return resolve(results);
-        })
-    })
-  };
+        });
+    });
+};
 
-  module.exports=crudsObj;
+crudsObj.getFullProductDefinitions = () => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT products_definition.*, inventory_mgt.selling_price, inventory_mgt.unit_cost, inventory_mgt.qty_balance FROM products_definition INNER JOIN inventory_mgt ON products_definition.product_id = inventory_mgt.product_id', (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+// getProductDefinitionById
+crudsObj.getProductDefinitionById = (id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('SELECT * FROM products_definition WHERE product_id = ?', [id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+crudsObj.updateProductDefinition = (product_id, company_id, branch_id, product_name, unit_of_measure, unit_size, syncid) => {
+    return new Promise((resolve, reject) => {
+        pool.query(
+            'UPDATE products_definition SET company_id = ?, branch_id = ?, product_name = ?, unit_of_measure = ?, unit_size = ?, syncid = ? WHERE product_id = ?',
+            [company_id, branch_id, product_name, unit_of_measure, unit_size, syncid, product_id],
+            (err, result) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve({ status: '200', message: 'update successful' });
+            }
+        );
+    });
+};
+
+crudsObj.deleteProductDefinition = (id) => {
+    return new Promise((resolve, reject) => {
+        pool.query('DELETE FROM products_definition WHERE product_id = ?', [id], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+module.exports = crudsObj;

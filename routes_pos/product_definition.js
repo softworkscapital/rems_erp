@@ -33,8 +33,13 @@ productDefinitionRouter.post('/', async (req, res, next) => {
         let views_count = postedValues.views_count; 
         let likes_count = postedValues.likes_count; 
         let uploaded_product_image_ref = postedValues.uploaded_product_image_ref; 
+        let uploaded_product_image_ref2 = postedValues.uploaded_product_image_ref2; 
+        let uploaded_product_image_ref3 = postedValues.uploaded_product_image_ref3; 
+        let uploaded_product_image_ref4 = postedValues.uploaded_product_image_ref4; 
+        let uploaded_product_image_ref5 = postedValues.uploaded_product_image_ref5; 
+        let uploaded_product_image_ref6 = postedValues.uploaded_product_image_ref6; 
+        let uploaded_product_image_ref7 = postedValues.uploaded_product_image_ref7; 
         let syncid = postedValues.syncid;
-
 
         let results = await productDefinitionDbOperations.postProductDefinition(
             product_id,
@@ -64,6 +69,12 @@ productDefinitionRouter.post('/', async (req, res, next) => {
             views_count,
             likes_count,
             uploaded_product_image_ref,
+            uploaded_product_image_ref2,
+            uploaded_product_image_ref3,
+            uploaded_product_image_ref4,
+            uploaded_product_image_ref5,
+            uploaded_product_image_ref6,
+            uploaded_product_image_ref7,
             syncid
         );
 
@@ -83,7 +94,6 @@ productDefinitionRouter.get('/', async (req, res, next) => {
         res.sendStatus(500);
     }
 });
-
 
 productDefinitionRouter.get('/full_products_definations', async (req, res, next) => {
     try {
@@ -116,9 +126,22 @@ productDefinitionRouter.put('/:id', async (req, res, next) => {
         let unit_of_measure = updatedValues.unit_of_measure;
         let unit_size = updatedValues.unit_size;
         let syncid = updatedValues.syncid;
+        let uploaded_product_image_ref = updatedValues.uploaded_product_image_ref;
+        let uploaded_product_image_ref2 = updatedValues.uploaded_product_image_ref2;
+        let uploaded_product_image_ref3 = updatedValues.uploaded_product_image_ref3;
+        let uploaded_product_image_ref4 = updatedValues.uploaded_product_image_ref4;
+        let uploaded_product_image_ref5 = updatedValues.uploaded_product_image_ref5;
+        let uploaded_product_image_ref6 = updatedValues.uploaded_product_image_ref6;
+        let uploaded_product_image_ref7 = updatedValues.uploaded_product_image_ref7;
 
         let result = await productDefinitionDbOperations.updateProductDefinition(
-            product_id, company_id, branch_id, product_name, unit_of_measure, unit_size, syncid
+            product_id, 
+            company_id, 
+            branch_id, 
+            product_name, 
+            unit_of_measure, 
+            unit_size, 
+            syncid
         );
         res.json(result);
     } catch (e) {
