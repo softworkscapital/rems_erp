@@ -105,8 +105,7 @@ paymentRouter.get('/total/sales', async (req, res, next) => {
 
 paymentRouter.get('/branchesonline/company/:company_id', async (req, res, next) => {
     try {
-        let branch_id = req.params.branch_id
-        let company_id = req.params.company_id
+        let company_id = req.params.company_id; // Correctly get company_id
         let results = await paymentDbOperations.getPaymentsBranchesOnlineByCompanyId(company_id);
         res.json(results);
     } catch (e) {

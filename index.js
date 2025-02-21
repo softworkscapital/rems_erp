@@ -64,7 +64,7 @@ const companySetupRouter = require('./routes_pos/company_setup');
 
 
 // REMS GAS
-// /const paymentRouter = require('./routes_gas_ecosystem/payments');
+const paymentRouter = require('./routes_gas_ecosystem/payments');
 const salesShiftPosGasRouter = require('./routes_gas_ecosystem/sales_shift');
 const branchesRouter = require('./routes_gas_ecosystem/branchz');
 
@@ -131,7 +131,7 @@ app.use('/sync', SyncRouter);
 //app.use('/saleshift', saleshiftRouter);
 
 //Gas
-// app.use('/payments', paymentRouter);
+app.use('/payments', paymentRouter);
 app.use('/salesshiftgas', salesShiftPosGasRouter);
 app.use('/branches', branchesRouter);
 app.use('/inventory', InventoryRouter);
@@ -150,16 +150,16 @@ app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
 })
 
-const options = {
-  cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
-  key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
-};
+// const options = {
+//   cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
+//   key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
+// };
 
-https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
-  console.log('app is listening to port' + process.env.APPPORT);
-});
+// https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
+//   console.log('app is listening to port' + process.env.APPPORT);
+// });
 
-//  app.listen(process.env.APPPORT || '3009', () => {
-//      console.log('app is listening to port' + process.env.APPPORT);
-//  });
+ app.listen(process.env.APPPORT || '3009', () => {
+     console.log('app is listening to port' + process.env.APPPORT);
+ });
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
