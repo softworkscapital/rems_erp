@@ -61,6 +61,18 @@ branchRouter.get('/:id', async (req, res) => {
     }
 });
 
+branchRouter.get('/company/:company_id', async (req, res, next) => {
+    try {
+        let company_id = req.params.company_id;
+        let result = await branchDbOperations.getBranchesByCompanyId(company_id);
+        res.json(result);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
 // Get branch name by branch ID
 branchRouter.get('/branch_name/:branch_id', async (req, res) => {
     try {
@@ -140,6 +152,32 @@ branchRouter.put('/:id', async (req, res) => {
         res.sendStatus(500);
     }
 });
+
+branchRouter.put('/update_inventory/:id', async (req, res, next) => {
+    try {
+        const branch_id = req.params.id;
+        const updatedValues = req.body;
+        const inventory_level = updatedValues.inventory_level;
+
+        // Validate input
+        if (typeof inventory_level !== 'number') {
+            return res.status(400).json({ message: "Invalid inventory level" });
+        }
+
+        const result = await branchDbOperations.updateBranchInventory(inventory_level, branch_id);
+
+        // Check if any rows were updated
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Branch not found" });
+        }
+
+        res.status(200).json({ status: "200", message: "Update successful" });
+    } catch (e) {
+        console.error("Error:", e.message);
+        res.sendStatus(500);
+    }
+});
+
 
 // Delete a branch
 branchRouter.delete('/:id', async (req, res) => {

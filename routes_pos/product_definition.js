@@ -105,6 +105,23 @@ productDefinitionRouter.get('/full_products_definations', async (req, res, next)
     }
 });
 
+
+
+productDefinitionRouter.get('/full_products_definations_by_product_id_or_product_code/:company_id/:branch_id/:product_id/:product_code', async (req, res, next) => {
+    try {
+        const company_id = req.params.company_id;
+        const branch_id = req.params.branch_id;
+        const product_id = req.params.product_id;
+        const product_code = req.params.product_code;
+
+        const results = await productDefinitionDbOperations.getFullProductDefinitionsByProductIdOrProductCode(company_id, branch_id, product_id, product_code);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 productDefinitionRouter.get('/:id', async (req, res, next) => {
     try {
         let client_id = req.params.id;
@@ -149,6 +166,9 @@ productDefinitionRouter.put('/:id', async (req, res, next) => {
         res.sendStatus(500);
     }
 });
+
+
+
 
 productDefinitionRouter.delete('/:id', async (req, res, next) => {
     try {

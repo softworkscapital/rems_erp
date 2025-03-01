@@ -130,6 +130,32 @@ branchesRouter.put('/:id', async (req, res, next) => {
     }
   });
 
+ 
+  branchesRouter.put('/update_inventory/:id', async (req, res, next) => {
+    try {
+        const branch_id = req.params.id;
+        const updatedValues = req.body;
+        const inventory_level = updatedValues.inventory_level;
+
+        // Validate input
+        if (typeof inventory_level !== 'number') {
+            return res.status(400).json({ message: "Invalid inventory level" });
+        }
+
+        const result = await branchDbOperations.updateBranchInventory(inventory_level, branch_id);
+
+        // Check if any rows were updated
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: "Branch not found" });
+        }
+
+        res.status(200).json({ status: "200", message: "Update successful" });
+    } catch (e) {
+        console.error("Error:", e.message);
+        res.sendStatus(500);
+    }
+});
+
 branchesRouter.delete('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;

@@ -48,6 +48,7 @@ const PayOutsAccRouter =require("./routes/fin_acc_pay_outs_accounts");
 const currencyRouter = require('./routes_pos/currency');
 const salesPricesRouter = require('./routes_pos/sales_prices');
 const saleRecordRouter = require('./routes_pos/sale_records');
+const salePosTransRouter = require('./routes_pos/salepostrans');
 const productDefinitionRouter = require('./routes_pos/product_definition');
 const inventoryMgtRouter = require('./routes_pos/inventorymgt');
 const shiftRouter = require('./routes_pos/shift');
@@ -115,10 +116,11 @@ app.use("/fin_acc_pay_outs_accounts", PayOutsAccRouter);
 
 
 //POS Route Usage
-app.use('/branches', branchRouter);
+//app.use('/branches', branchRouter);
 app.use('/currency', currencyRouter);
 app.use('/salesprice', salesPricesRouter);
 app.use('/salerecords', saleRecordRouter);
+app.use('/salepostrans', salePosTransRouter);
 app.use('/productdefinition', productDefinitionRouter);
 app.use('/inventorymgt', inventoryMgtRouter);
 app.use('/shift', shiftRouter);
@@ -150,16 +152,16 @@ app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
 })
 
-const options = {
-  cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
-  key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
-};
+// const options = {
+//   cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
+//   key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
+// };
 
-https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
-  console.log('app is listening to port' + process.env.APPPORT);
-});
+// https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
+//   console.log('app is listening to port' + process.env.APPPORT);
+// });
 
-//  app.listen(process.env.APPPORT || '3009', () => {
-//      console.log('app is listening to port' + process.env.APPPORT);
-//  });
+ app.listen(process.env.APPPORT || '3009', () => {
+     console.log('app is listening to port' + process.env.APPPORT);
+ });
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm

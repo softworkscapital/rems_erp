@@ -72,9 +72,10 @@ crudsObj.getBranches = () => {
 };
 
 crudsObj.getBranchesByCompanyId = (company_id) => {
+  //SELECT branch_id, branch_name, multi_sync_control_status
   return new Promise((resolve, reject) => {
     const query = `
-            SELECT branch_id, branch_name, multi_sync_control_status 
+            SELECT * 
             FROM branches 
             WHERE company_id = ?`;
 
@@ -198,6 +199,23 @@ crudsObj.updateBranch = (
         return resolve({ status: "200", message: "update successful" });
       }
     );
+  });
+};
+
+
+crudsObj.updateBranchInventory = (inventory_level, id) => {
+  return new Promise((resolve, reject) => {
+      pool.query(
+          "UPDATE branches SET inventory_level = ? WHERE branch_id = ?",
+          [inventory_level, id],
+          (err, result) => {
+              if (err) {
+                  console.error("Database error:", err); // Log the error
+                  return reject(err);
+              }
+              resolve(result); // Return the result directly
+          }
+      );
   });
 };
 

@@ -44,6 +44,31 @@ crudsObj.getBranchById = (branch_id) => {
     });
 };
 
+crudsObj.getBranchesByCompanyId = (company_id) => {
+    //SELECT branch_id, branch_name, multi_sync_control_status
+    return new Promise((resolve, reject) => {
+      const query = `
+              SELECT * 
+              FROM branches 
+              WHERE company_id = ?`;
+  
+      pool.query(query, [company_id], (err, results) => {
+        if (err) {
+          return reject(err);
+        }
+        // Log the multi_sync_control_status for each branch
+        results.forEach((branch) => {
+          console.log(
+            `Branch ID: ${branch.branch_id}, Status: ${branch.multi_sync_control_status}`
+          );
+        });
+        return resolve(results);
+      });
+    });
+  };
+  
+
+
 // Get branch name by branch ID
 crudsObj.getBranchNameByBranchId = (branchID) => {
     return new Promise((resolve, reject) => {
@@ -95,6 +120,23 @@ crudsObj.updateBranch = (id, branch_name, branch_location, branch_location_notes
         );
     });
 };
+
+crudsObj.updateBranchInventory = (inventory_level, id) => {
+    return new Promise((resolve, reject) => {
+        pool.query(
+            "UPDATE branches SET inventory_level = ? WHERE branch_id = ?",
+            [inventory_level, id],
+            (err, result) => {
+                if (err) {
+                    console.error("Database error:", err); // Log the error
+                    return reject(err);
+                }
+                resolve(result); // Return the result directly
+            }
+        );
+    });
+};
+
 
 // Delete a branch
 crudsObj.deleteBranch = (id) => {

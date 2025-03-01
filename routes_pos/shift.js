@@ -2,6 +2,7 @@ const express = require('express');
 const shiftRouter = express.Router();
 const shiftDbOperations = require('../cruds_pos/shift');
 
+// Route to create a new shift
 shiftRouter.post('/', async (req, res, next) => {
     try {
         let postedValues = req.body;
@@ -21,6 +22,7 @@ shiftRouter.post('/', async (req, res, next) => {
     }
 });
 
+// Route to get all shifts
 shiftRouter.get('/', async (req, res, next) => {
     try {
         let results = await shiftDbOperations.getShift();
@@ -31,6 +33,7 @@ shiftRouter.get('/', async (req, res, next) => {
     }
 });
 
+// Route to get a shift by ID
 shiftRouter.get('/:id', async (req, res, next) => {
     try {
         let shift_id = req.params.id;
@@ -42,6 +45,21 @@ shiftRouter.get('/:id', async (req, res, next) => {
     }
 });
 
+// New route to get shift details by user_id, company_id, and branch_id
+shiftRouter.get('/shiftdetails/:user_id/:company_id/:branch_id', async (req, res, next) => {
+    try {
+        let user_id = req.params.user_id;
+        let company_id = req.params.company_id;
+        let branch_id = req.params.branch_id;
+        let results = await shiftDbOperations.getShiftsByUserAndBranch(user_id, company_id, branch_id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+// Route to update a shift by ID
 shiftRouter.put('/:id', async (req, res, next) => {
     try {
         let shift_id = req.params.id;
@@ -71,6 +89,7 @@ shiftRouter.put('/:id', async (req, res, next) => {
     }
 });
 
+// Route to delete a shift by ID
 shiftRouter.delete('/:id', async (req, res, next) => {
     try {
         let id = req.params.id;

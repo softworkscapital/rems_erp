@@ -141,6 +141,35 @@ crudsObj.getFullProductDefinitions = () => {
         });
     });
 };
+crudsObj.getFullProductDefinitionsByProductIdOrProductCode = (company_id, branch_id, product_id, product_code) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                products_definition.*, 
+                inventory_mgt.selling_price, 
+                inventory_mgt.unit_cost, 
+                inventory_mgt.qty_balance 
+            FROM 
+                products_definition 
+            INNER JOIN 
+                inventory_mgt 
+            ON 
+                products_definition.product_id = inventory_mgt.product_id 
+            WHERE 
+                products_definition.company_id = ? 
+                AND products_definition.branch_id = ? 
+                AND (products_definition.product_id = ? OR products_definition.product_code = ?)
+        `;
+
+        pool.query(query, [company_id, branch_id, product_id, product_code], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 
 // getProductDefinitionById
 crudsObj.getProductDefinitionById = (id) => {
