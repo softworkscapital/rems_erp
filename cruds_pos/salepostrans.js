@@ -180,7 +180,7 @@ crudsObj.postSalePosTrans = (
                 if (err) {
                     return reject(err);
                 }
-                return resolve({ status: "200", message: "Invoice created successfully", result });
+                return resolve({ status: "200", message: "sale pos transaction created successfully", result });
             }
         );
     });
@@ -209,6 +209,8 @@ crudsObj.getSalePosTransSaleByShift = (company_id, branch_id, shift_id) => {
                 if (err) {
                     return reject(err);
                 }
+
+
                 return resolve(results);
             }
         );

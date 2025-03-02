@@ -64,7 +64,7 @@ salePosTransRouter.post('/add_sale_pos_trans_sold', async (req, res, next) => {
         } = postedValues;
 
         let results = await salePosTransDbOperations.postSalePosTrans(
-     
+            propertyid,
             project,
             company_id,
             branch_id,

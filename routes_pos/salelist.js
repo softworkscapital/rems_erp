@@ -5,6 +5,8 @@ const saleListDbOperations = require('../cruds_pos/salelist');
 saleListRouter.post('/', async (req, res, next) => {
     try {
         let postedValues = req.body;
+        let company_id = postedValues.company_id;
+        let branch_id = postedValues.branch_id;
         let sale_records_id = postedValues.sale_records_id;
         let product_id = postedValues.product_id;
         let quantity = postedValues.quantity;
@@ -12,7 +14,7 @@ saleListRouter.post('/', async (req, res, next) => {
         let selling_price = postedValues.selling_price;
 
         console.log("rrr" + sale_records_id);
-        let results = await saleListDbOperations.postSaleList(sale_records_id, product_id, quantity, unit_cost, selling_price);
+        let results = await saleListDbOperations.postSaleList(company_id,branch_id,sale_records_id, product_id, quantity, unit_cost, selling_price);
         res.json(results);
     } catch (e) {
         console.log(e);

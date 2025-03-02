@@ -3,11 +3,11 @@ const pool = require('./poolfile');
 
 let crudsObj = {};
 
-crudsObj.postSaleList = (sale_records_id, product_id, quantity, unit_cost, selling_price)=>{
+crudsObj.postSaleList = (company_id,branch_id,sale_records_id, product_id, quantity, unit_cost, selling_price)=>{
 
     return new Promise((resolve, reject)=>{
         console.log("product added to list "+product_id);
-        pool.query('INSERT INTO sale_list_item (sale_records_id, product_id, quantity, unit_cost, selling_price) VALUES (?,?,?,?,?)',[sale_records_id, product_id, quantity, unit_cost, selling_price], (err, result)=>{
+        pool.query('INSERT INTO sale_list_item (company_id,branch_id,sale_records_id, product_id, quantity, unit_cost, selling_price) VALUES (?,?,?,?,?,?,?)',[company_id,branch_id,sale_records_id, product_id, quantity, unit_cost, selling_price], (err, result)=>{
             if(err){
                 return reject(err);
             }

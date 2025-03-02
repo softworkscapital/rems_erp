@@ -4,6 +4,7 @@ const inventoryMgtDbOperations = require('../cruds_pos/inventorymgt');
 
 inventoryMgtRouter.post('/', async (req, res, next) => {
     try {
+        console.log("Received body:", req.body); 
         let postedValues = req.body;
         let company_id = postedValues.company_id;
         let branch_id = postedValues.branch_id;
@@ -28,7 +29,22 @@ inventoryMgtRouter.post('/', async (req, res, next) => {
     }
 });
 
-
+inventoryMgtRouter.post('/dispatch', async (req, res, next) => {
+    try {
+        let postedValues = req.body;
+        let company_id = postedValues.company_id;
+        let branch_id = postedValues.branch_id;
+        let sale_records_id = postedValues.sale_records_id;
+        let product_id = postedValues.product_id;
+        let quantity= postedValues.quantity;
+ 
+        let results = await inventoryMgtDbOperations.postInvetoryMgtDispatch(company_id, branch_id, sale_records_id, product_id, quantity);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
 
 inventoryMgtRouter.get('/', async (req, res, next) => {
     try {
