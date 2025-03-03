@@ -171,6 +171,88 @@ crudsObj.getFullProductDefinitionsByProductIdOrProductCode = (company_id, branch
 };
 
 
+crudsObj.getAllCompaniesFullProductDefinitionsByCategory = (category) => {
+    return new Promise((resolve, reject) => {
+        const query = `
+            SELECT 
+                products_definition.*, 
+                inventory_mgt.selling_price, 
+                inventory_mgt.unit_cost, 
+                inventory_mgt.qty_balance,
+                branches.branch_name,
+                company_setup.name,
+                company_setup.portrait_logo,
+                company_setup.horizontal_logo
+            FROM 
+                products_definition 
+            INNER JOIN 
+                inventory_mgt 
+            ON 
+                products_definition.product_id = inventory_mgt.product_id
+            INNER JOIN 
+                branches
+                ON
+                products_definition.branch_id = branches.branch_id
+                  INNER JOIN 
+                company_setup
+                ON
+                products_definition.company_id = company_setup.company_id
+            WHERE 
+                products_definition.category = ?  
+        `; // Removed the extra parenthesis
+
+        pool.query(query, [category], (err, results) => {
+            if (err) {
+                return reject(err);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+
+// crudsObj.getMyCompanyMyBranchFullProductDefinitionsByCategory = (category) => {
+//     return new Promise((resolve, reject) => {
+//         const query = `
+//             SELECT 
+//                 products_definition.*, 
+//                 inventory_mgt.selling_price, 
+//                 inventory_mgt.unit_cost, 
+//                 inventory_mgt.qty_balance,
+//                 branches.branch_name,
+//                 company_setup.name,
+//                 company_setup.portrait_logo,
+//                 company_setup.horizontal_logo
+//             FROM 
+//                 products_definition 
+//             INNER JOIN 
+//                 inventory_mgt 
+//             ON 
+//                 products_definition.product_id = inventory_mgt.product_id
+//             INNER JOIN 
+//                 branches
+//                 ON
+//                 products_definition.branch_id = branches.branch_id
+//                   INNER JOIN 
+//                 company_setup
+//                 ON
+//                 products_definition.company_id = company_setup.company_id
+//             WHERE 
+//                 products_definition.category = ?  
+//         `; // Removed the extra parenthesis
+
+//         pool.query(query, [category], (err, results) => {
+//             if (err) {
+//                 return reject(err);
+//             }
+//             return resolve(results);
+//         });
+//     });
+// };
+
+
+
+
 // getProductDefinitionById
 crudsObj.getProductDefinitionById = (id) => {
     return new Promise((resolve, reject) => {

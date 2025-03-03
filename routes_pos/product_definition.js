@@ -122,6 +122,20 @@ productDefinitionRouter.get('/full_products_definations_by_product_id_or_product
     }
 });
 
+productDefinitionRouter.get('/all_stores_full_products_definitions_by_category/:category', async (req, res, next) => {
+    try {
+        const category = req.params.category;
+        const results = await productDefinitionDbOperations.getAllCompaniesFullProductDefinitionsByCategory(category);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+
+
 productDefinitionRouter.get('/:id', async (req, res, next) => {
     try {
         let client_id = req.params.id;

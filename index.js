@@ -54,7 +54,7 @@ const inventoryMgtRouter = require('./routes_pos/inventorymgt');
 const shiftRouter = require('./routes_pos/shift');
 const shiftBalancesRouter = require('./routes_pos/shiftbalances');
 const CustomerRouter = require('./routes_pos/customer_details');
-const pettyCashRouter = require('./routes_pos/pettycash');
+const paymentsPettyCashPosRouter = require('./routes_pos/payments_pettycash_pos');
 const saleListRouter = require('./routes_pos/salelist');
 // const CompanyRouter = require('./routes_gas/company');
 const salesInvoiceRouter = require('./routes_pos/sales_invoices');
@@ -126,7 +126,7 @@ app.use('/inventorymgt', inventoryMgtRouter);
 app.use('/shift', shiftRouter);
 app.use('/shiftbalances', shiftBalancesRouter);
 app.use('/customers', CustomerRouter);
-app.use('/pettycash', pettyCashRouter);
+app.use('/pettycashpos', paymentsPettyCashPosRouter);
 app.use('/salelist', saleListRouter);
 app.use('/sync', SyncRouter);
 // app.use('/company', CompanyRouter);
@@ -152,16 +152,16 @@ app.get('/', (req, res) => {
     res.send("REMS ECOSYSTEM");
 })
 
-// const options = {
-//   cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
-//   key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
-// };
+const options = {
+  cert: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/fullchain.pem'),
+  key: fs.readFileSync('/etc/letsencrypt/live/srv547457.hstgr.cloud/privkey.pem')
+};
 
-// https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
-//   console.log('app is listening to port' + process.env.APPPORT);
-// });
+https.createServer(options, app).listen(process.env.APPPORT || '3009', () => {
+  console.log('app is listening to port' + process.env.APPPORT);
+});
 
- app.listen(process.env.APPPORT || '3009', () => {
-     console.log('app is listening to port' + process.env.APPPORT);
- });
+//  app.listen(process.env.APPPORT || '3009', () => {
+//      console.log('app is listening to port' + process.env.APPPORT);
+//  });
 //mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
