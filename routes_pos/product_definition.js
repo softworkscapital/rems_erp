@@ -122,6 +122,21 @@ productDefinitionRouter.get('/full_products_definations_by_product_id_or_product
     }
 });
 
+
+productDefinitionRouter.get('/full_products_definitions_by_company_id_branch_id/:company_id/:branch_id', async (req, res, next) => {
+    try {
+        const company_id = req.params.company_id;
+        const branch_id = req.params.branch_id;
+
+
+        const results = await productDefinitionDbOperations.getProductDefinitionsByCompanyByBranch(company_id, branch_id);
+        res.json(results);
+    } catch (e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
 productDefinitionRouter.get('/all_stores_full_products_definitions_by_category/:category', async (req, res, next) => {
     try {
         const category = req.params.category;
