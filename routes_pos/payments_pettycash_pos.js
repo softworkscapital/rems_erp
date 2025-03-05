@@ -3,9 +3,13 @@ const paymentsPettyCashPosRouter = express.Router();
 const paymentsPettyCashPosDbOperations = require('../cruds_pos/payments_pettycash_pos');
 
 // Add new petty cash record
-paymentsPettyCashPosRouter.post('/add_petty_cash', async (req, res) => {
+paymentsPettyCashPosRouter.post('/', async (req, res) => {
     try {
         const postedValues = req.body;
+
+        // Log the incoming request for debugging
+        console.log('Received POST request with body:', postedValues);
+
         const result = await paymentsPettyCashPosDbOperations.postPettyCash(
             postedValues.pettycash_id,
             postedValues.company_id,
@@ -73,9 +77,10 @@ paymentsPettyCashPosRouter.post('/add_petty_cash', async (req, res) => {
             postedValues.sync_date_time,
             postedValues.syncid
         );
+
         res.json(result);
     } catch (e) {
-        console.log(e);
+        console.error('Error handling request:', e); // Log error
         res.sendStatus(500);
     }
 });
